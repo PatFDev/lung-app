@@ -1,38 +1,125 @@
-.App {
+.mainContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.uploadSection {
+  flex: 1;
+  margin-right: 20px; /* Adjust spacing between sections as needed */
+}
+
+.historySection {
+  width: 300px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Enable scrolling for long history lists */
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 5px 0;
+  border: 2px solid;
+  border-radius: 5px;
+}
+
+.app {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 20px;
+}
+
+.container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.heading {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.customFileUpload {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #007bff;
   color: white;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 10px 0;
+  width: auto;
 }
 
-.App-link {
-  color: #61dafb;
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropZone {
+  border: 2px dashed #007bff;
+  padding: 20px;
+  border-radius: 10px;
+  color: #007bff;
+  margin: 20px 0;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  margin: 10px auto;
+}
+
+.imageContainer {
+  margin-top: 20px;
+}
+
+.image,
+.smallImage {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  width: 100%;
+}
+
+.historyContainer {
+  margin-top: 40px;
+}
+
+.smallImage {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
