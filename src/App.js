@@ -58,16 +58,61 @@ function App() {
     }
   };
 
+  const appStyle = {
+    textAlign: "center",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    backgroundColor: "#222",
+    color: "#fff",
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px",
+  };
+
+  const containerStyle = {
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    borderRadius: "20px",
+    backgroundColor: "#333",
+    padding: "40px",
+    maxWidth: "800px",
+    width: "100%",
+  };
+
+  const headingStyle = {
+    marginBottom: "20px",
+  };
+
+  const dropZoneStyle = {
+    border: "2px dashed #007bff",
+    padding: "20px",
+    borderRadius: "10px",
+    color: "#007bff",
+    margin: "20px 0",
+  };
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    fontSize: "16px",
+    color: "#333",
+    backgroundColor: isLoading ? "#ccc" : "#28a745",
+    border: "none",
+    borderRadius: "5px",
+    display: "inline-block",
+    marginTop: "20px",
+    cursor: isLoading ? "not-allowed" : "pointer",
+  };
+
   return (
-    <div style={styles.app}>
-      <div style={styles.container}>
-        <h1 style={styles.heading}>Image Classifier</h1>
+    <div style={appStyle}>
+      <div style={containerStyle}>
+        <h1 style={headingStyle}>LungVision AI</h1>
         <div style={styles.mainContent}>
           <div style={styles.uploadSection}>
             <div
               onDragOver={handleDragOver}
               onDrop={handleDrop}
-              style={styles.dropZone}
+              style={dropZoneStyle}
             >
               <label htmlFor="file-upload" style={styles.customFileUpload}>
                 {selectedImage
@@ -84,7 +129,7 @@ function App() {
             </div>
             <button
               onClick={handleSubmit}
-              style={styles.button}
+              style={buttonStyle}
               disabled={isLoading}
             >
               {isLoading ? "Analyzing..." : "Upload and Classify"}
@@ -98,10 +143,25 @@ function App() {
                   style={styles.image}
                 />
                 {classification && (
-                  <div style={styles.result(classification)}>
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      display: "inline-block",
+                      width: "100%",
+                      backgroundColor:
+                        classification === "NORMAL" ? "#d4edda" : "#f8d7da", // Green for normal, red for pneumonia
+                      color:
+                        classification === "NORMAL" ? "#155724" : "#721c24", // Dark green text for normal, dark red text for pneumonia
+                      border: `2px solid ${
+                        classification === "NORMAL" ? "#28a745" : "#dc3545"
+                      }`, // Border color changes based on classification
+                    }}
+                  >
                     {classification === "NORMAL"
-                      ? "No Pneumonia Detected"
-                      : "Pneumonia Detected"}
+                      ? "No Pneumonia Detected 👍"
+                      : "Pneumonia Detected 🤒"}
                   </div>
                 )}
               </div>
@@ -113,8 +173,12 @@ function App() {
                 key={index}
                 style={{
                   ...styles.historyItem,
+                  backgroundColor:
+                    item.classification === "NORMAL" ? "#d4edda" : "#f8d7da", // Green for normal, red for pneumonia
+                  color:
+                    item.classification === "NORMAL" ? "#155724" : "#721c24", // Text color
                   borderColor:
-                    item.classification === "NORMAL" ? "#28a745" : "#dc3545", // Conditional border color
+                    item.classification === "NORMAL" ? "#28a745" : "#dc3545", // Border color
                 }}
               >
                 <img
@@ -122,7 +186,14 @@ function App() {
                   alt={`Preview ${index}`}
                   style={styles.smallImage}
                 />
-                <p>{item.classification}</p>
+                <p
+                  style={{
+                    color:
+                      item.classification === "NORMAL" ? "#155724" : "#721c24",
+                  }}
+                >
+                  {item.classification}
+                </p>
               </div>
             ))}
           </div>
@@ -137,15 +208,15 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
+    gap: "20px",
   },
   uploadSection: {
     flex: 1,
-    marginRight: "20px", // Adjust spacing between sections as needed
   },
   historySection: {
-    width: "300px", // Adjust width as needed
-    maxHeight: "600px", // Adjust height as needed
-    overflowY: "auto", // Enable scrolling for long history lists
+    width: "300px",
+    maxHeight: "600px",
+    overflowY: "auto",
   },
   historyItem: {
     display: "flex",
@@ -155,28 +226,6 @@ const styles = {
     border: "2px solid",
     borderRadius: "5px",
   },
-  app: {
-    textAlign: "center",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: "#f0f2f5",
-    minHeight: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "20px",
-  },
-  container: {
-    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-    borderRadius: "10px",
-    backgroundColor: "white",
-    padding: "20px",
-    maxWidth: "600px",
-    width: "100%",
-  },
-  heading: {
-    color: "#333",
-    marginBottom: "20px",
-  },
   customFileUpload: {
     cursor: "pointer",
     padding: "10px 20px",
@@ -185,25 +234,6 @@ const styles = {
     borderRadius: "5px",
     display: "inline-block",
     margin: "10px 0",
-    width: "auto",
-  },
-  button: {
-    padding: "10px 20px",
-    fontSize: "16px",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    display: "inline-block",
-    marginTop: "20px",
-  },
-  dropZone: {
-    border: "2px dashed #007bff",
-    padding: "20px",
-    borderRadius: "10px",
-    color: "#007bff",
-    margin: "20px 0",
   },
   loader: {
     border: "4px solid #f3f3f3",
@@ -221,17 +251,14 @@ const styles = {
     maxWidth: "100%",
     borderRadius: "5px",
   },
-  result: (classification) => ({
+  result: {
     marginTop: "20px",
     padding: "10px",
     borderRadius: "5px",
-    color: classification === "NORMAL" ? "#155724" : "#721c24",
-    backgroundColor: classification === "NORMAL" ? "#d4edda" : "#f8d7da",
     display: "inline-block",
     width: "100%",
-  }),
-  historyContainer: {
-    marginTop: "40px",
+    backgroundColor: "#d4edda",
+    color: "#155724",
   },
   smallImage: {
     width: "50px",
@@ -240,8 +267,8 @@ const styles = {
     borderRadius: "5px",
   },
   "@keyframes spin": {
-    "0%": { transform: "rotate(0deg)" },
-    "100%": { transform: "rotate(360deg)" },
+    from: { transform: "rotate(0deg)" },
+    to: { transform: "rotate(360deg)" },
   },
 };
 
